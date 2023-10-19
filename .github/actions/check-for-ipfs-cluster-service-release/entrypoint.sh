@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -eu
 
-echo '💫 Checking https://dist.ipfs.tech/ipfs-cluster-service/versions for new releases...'
+echo '💫 Checking https://dist.ipfs.tech/ipfs-cluster-ctl/versions for new releases...'
 
 # The version in packge.json e.g. "0.4.20"
 CURRENT=`node -e 'console.log(require("./package.json").version)'`
 # The latest version on dist.ipfs.tech e.g. "0.4.21"
-LATEST=`curl --silent https://dist.ipfs.tech/ipfs-cluster-service/versions | tail -n 1 | cut -c 2-`
+LATEST=`curl --silent https://dist.ipfs.tech/ipfs-cluster-ctl/versions | tail -n 1 | cut -c 2-`
 
 # Verify $LATEST is valid semver!
 if ! npx semver $LATEST; then

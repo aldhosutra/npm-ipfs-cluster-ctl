@@ -1,17 +1,17 @@
 "use strict";
 
 /*
-  Download ipfs-cluster-service distribution package for desired version, platform and architecture,
+  Download ipfs-cluster-ctl distribution package for desired version, platform and architecture,
   and unpack it to a desired output directory.
 
   API:
     download(<version>, <platform>, <arch>, <outputPath>)
 
   Defaults:
-    ipfs-cluster-service version: value in package.json/ipfs-cluster-service/version
-    ipfs-cluster-service platform: the platform this program is run from
-    ipfs-cluster-service architecture: the architecture of the hardware this program is run from
-    ipfs-cluster-service install path: './ipfs-cluster-service'
+    ipfs-cluster-ctl version: value in package.json/ipfs-cluster-ctl/version
+    ipfs-cluster-ctl platform: the platform this program is run from
+    ipfs-cluster-ctl architecture: the architecture of the hardware this program is run from
+    ipfs-cluster-ctl install path: './ipfs-cluster-ctl'
 */
 const goenv = require("./go-platform");
 const gunzip = require("gunzip-maybe");
@@ -34,7 +34,7 @@ const isWin = process.platform === "win32";
  */
 async function cachingFetchAndVerify(url) {
   const cacheDir =
-    process.env.NPM_GO_IPFS_CACHE || cachedir("ipfs-cluster-service");
+    process.env.NPM_GO_IPFS_CACHE || cachedir("ipfs-cluster-ctl");
   const filename = url.split("/").pop();
 
   if (!filename) {
@@ -115,7 +115,7 @@ function unpack(url, installPath, stream) {
  * @param {string} [installPath]
  */
 function cleanArguments(version, platform, arch, installPath) {
-  const conf = pkgConf.sync("ipfs-cluster-service", {
+  const conf = pkgConf.sync("ipfs-cluster-ctl", {
     cwd: process.env.INIT_CWD || process.cwd(),
     defaults: {
       version: "v" + pkg.version.replace(/-[0-9]+/, ""),
@@ -137,10 +137,8 @@ function cleanArguments(version, platform, arch, installPath) {
  * @param {string} distUrl
  */
 async function ensureVersion(version, distUrl) {
-  console.info(`${distUrl}/ipfs-cluster-service/versions`);
-  const versions = (
-    await got(`${distUrl}/ipfs-cluster-service/versions`).text()
-  )
+  console.info(`${distUrl}/ipfs-cluster-ctl/versions`);
+  const versions = (await got(`${distUrl}/ipfs-cluster-ctl/versions`).text())
     .trim()
     .split("\n");
 
@@ -159,7 +157,7 @@ async function getDownloadURL(version, platform, arch, distUrl) {
   await ensureVersion(version, distUrl);
 
   const data = await got(
-    `${distUrl}/ipfs-cluster-service/${version}/dist.json`
+    `${distUrl}/ipfs-cluster-ctl/${version}/dist.json`
   ).json();
 
   if (!data.platforms[platform]) {
@@ -171,7 +169,7 @@ async function getDownloadURL(version, platform, arch, distUrl) {
   }
 
   const link = data.platforms[platform].archs[arch].link;
-  return `${distUrl}/ipfs-cluster-service/${version}${link}`;
+  return `${distUrl}/ipfs-cluster-ctl/${version}${link}`;
 }
 
 /**
@@ -191,8 +189,8 @@ async function download({ version, platform, arch, installPath, distUrl }) {
 
   return path.join(
     installPath,
-    "ipfs-cluster-service",
-    `ipfs-cluster-service${platform === "windows" ? ".exe" : ""}`
+    "ipfs-cluster-ctl",
+    `ipfs-cluster-ctl${platform === "windows" ? ".exe" : ""}`
   );
 }
 
@@ -203,7 +201,7 @@ async function download({ version, platform, arch, installPath, distUrl }) {
  */
 async function link({ depBin, version }) {
   let localBin = path.resolve(
-    path.join(__dirname, "..", "bin", "ipfs-cluster-service")
+    path.join(__dirname, "..", "bin", "ipfs-cluster-ctl")
   );
 
   if (isWin) {
@@ -212,7 +210,7 @@ async function link({ depBin, version }) {
 
   if (!fs.existsSync(depBin)) {
     throw new Error(
-      "ipfs-cluster-service binary not found. maybe ipfs-cluster-service did not install correctly?"
+      "ipfs-cluster-ctl binary not found. maybe ipfs-cluster-ctl did not install correctly?"
     );
   }
 
@@ -225,17 +223,12 @@ async function link({ depBin, version }) {
 
   if (isWin) {
     // On Windows, update the shortcut file to use the .exe
-    const cmdFile = path.join(
-      __dirname,
-      "..",
-      "..",
-      "ipfs-cluster-service.cmd"
-    );
+    const cmdFile = path.join(__dirname, "..", "..", "ipfs-cluster-ctl.cmd");
 
     fs.writeFileSync(
       cmdFile,
       `@ECHO OFF
-  "%~dp0\\node_modules\\ipfs-cluster-service\\bin\\ipfs-cluster-service.exe" %*`
+  "%~dp0\\node_modules\\ipfs-cluster-ctl\\bin\\ipfs-cluster-ctl.exe" %*`
     );
   }
 

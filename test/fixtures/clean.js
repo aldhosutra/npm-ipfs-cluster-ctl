@@ -5,10 +5,10 @@ const path = require("path");
 const execa = require("execa");
 
 module.exports = async function clean() {
-  await fs.remove(path.resolve(__dirname, "../../ipfs-cluster-service"));
+  await fs.remove(path.resolve(__dirname, "../../ipfs-cluster-ctl"));
   await execa("git", [
     "checkout",
     "--",
-    path.resolve(__dirname, "../../bin/ipfs-cluster-service"),
+    path.resolve(__dirname, "../../bin/ipfs-cluster-ctl"),
   ]);
 };

@@ -1,18 +1,18 @@
 {
-  "name": "ipfs-cluster-service",
+  "name": "ipfs-cluster-ctl",
   "version": "1.0.7",
-  "description": "Install the latest ipfs-cluster-service binary",
+  "description": "Install the latest ipfs-cluster-ctl binary",
   "main": "src/index.js",
   "scripts": {
     "postinstall": "node src/post-install.js",
-    "restore-bin": "git reset -- bin/ipfs-cluster-service && git checkout -- bin/ipfs-cluster-service",
+    "restore-bin": "git reset -- bin/ipfs-cluster-ctl && git checkout -- bin/ipfs-cluster-ctl",
     "test": "tape test/*.js | tap-spec",
     "lint": "tsc --noEmit && standard",
     "prepublishOnly": "tsc"
   },
   "pre-commit": "restore-bin",
   "bin": {
-    "ipfs-cluster-service": "bin/ipfs-cluster-service"
+    "ipfs-cluster-ctl": "bin/ipfs-cluster-ctl"
   },
   "files": [
     "bin",
@@ -26,7 +26,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aldhosutra/npm-ipfs-cluster-service.git"
+    "url": "git+https://github.com/aldhosutra/npm-ipfs-cluster-ctl.git"
   },
   "keywords": [
     "ipfs",
@@ -35,9 +35,9 @@
   "author": "aldhosutra",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/aldhosutra/npm-ipfs-cluster-service/issues"
+    "url": "https://github.com/aldhosutra/npm-ipfs-cluster-ctl/issues"
   },
-  "homepage": "https://github.com/aldhosutra/npm-ipfs-cluster-service",
+  "homepage": "https://github.com/aldhosutra/npm-ipfs-cluster-ctl",
   "types": "./src/types.d.ts",
   "devDependencies": {
     "@types/got": "^9.6.12",

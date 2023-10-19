@@ -5,7 +5,7 @@ const execa = require("execa");
 const cachedir = require("cachedir");
 
 /*
-  Test that correct ipfs-cluster-service is downloaded during npm install.
+  Test that correct ipfs-cluster-ctl is downloaded during npm install.
 */
 
 const expectedVersion = require("../package.json").version;
@@ -17,12 +17,12 @@ async function clean() {
   await fs.remove(
     path.join(__dirname, "fixtures", "example-project", "package-lock.json")
   );
-  await fs.remove(cachedir("ipfs-cluster-service"));
+  await fs.remove(cachedir("ipfs-cluster-ctl"));
 }
 
 test.onFinish(clean);
 
-test("Ensure ipfs-cluster-service defined in package.json is fetched on dependency install", async (t) => {
+test("Ensure ipfs-cluster-ctl defined in package.json is fetched on dependency install", async (t) => {
   await clean();
 
   const exampleProjectRoot = path.join(
@@ -40,7 +40,7 @@ test("Ensure ipfs-cluster-service defined in package.json is fetched on dependen
   const fetchedVersion = require(path.join(
     exampleProjectRoot,
     "node_modules",
-    "ipfs-cluster-service",
+    "ipfs-cluster-ctl",
     "package.json"
   )).version;
   t.ok(
@@ -52,17 +52,17 @@ test("Ensure ipfs-cluster-service defined in package.json is fetched on dependen
   const binary = path.join(
     exampleProjectRoot,
     "node_modules",
-    "ipfs-cluster-service",
+    "ipfs-cluster-ctl",
     "bin",
-    "ipfs-cluster-service"
+    "ipfs-cluster-ctl"
   );
   const versionRes = execa.sync(binary, ["--version"], {
     cwd: exampleProjectRoot,
   });
 
   t.ok(
-    versionRes.stdout === `ipfs-cluster-service version ${expectedVersion}`,
-    `ipfs-cluster-service --version output match '${expectedVersion}'`
+    versionRes.stdout === `ipfs-cluster-ctl version ${expectedVersion}`,
+    `ipfs-cluster-ctl --version output match '${expectedVersion}'`
   );
 
   t.end();

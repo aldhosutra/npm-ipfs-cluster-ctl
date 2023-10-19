@@ -1,4 +1,4 @@
-name: "Check for ipfs-cluster-service release"
+name: "Check for ipfs-cluster-ctl release"
 runs:
   using: "docker"
   image: "Dockerfile"

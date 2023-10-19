@@ -12,12 +12,8 @@ test("Ensure ipfs gets downloaded (current version and platform)", async (t) => 
   const installPath = await download();
   const stats = await fs.stat(installPath);
 
-  t.ok(stats, "ipfs-cluster-service was downloaded");
-  t.ok(
-    installPath,
-    detectLocation(),
-    "ipfs-cluster-service binary was detected"
-  );
+  t.ok(stats, "ipfs-cluster-ctl was downloaded");
+  t.ok(installPath, detectLocation(), "ipfs-cluster-ctl binary was detected");
 
   t.end();
 });
