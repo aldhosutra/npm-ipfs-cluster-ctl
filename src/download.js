@@ -233,15 +233,19 @@ async function link({ depBin, version }) {
   }
 
   // test ipfs installed correctly.
-  var result = cproc.spawnSync(localBin, ["version"]);
+  var result = cproc.spawnSync(localBin, ["--version"]);
   if (result.error) {
     throw new Error("ipfs binary failed: " + result.error);
   }
 
   var outstr = result.stdout.toString();
-  console.log("got version:", outstr);
+  var m = /ipfs-cluster-ctl version ([^\n]+)\n/.exec(outstr);
 
-  var actualVersion = `v1.0.7`;
+  if (!m) {
+    throw new Error("Could not determine IPFS Cluster version");
+  }
+
+  var actualVersion = `v${m[1]}`;
 
   if (actualVersion !== version) {
     throw new Error(
