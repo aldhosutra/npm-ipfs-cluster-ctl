@@ -1,0 +1,28 @@
+name: Release to npm
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 8 * * *"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Check for new ipfs-cluster-service version
+        id: check
+        uses: ./.github/actions/check-for-ipfs-cluster-service-release
+      - name: Set up node
+        if: steps.check.outputs.publish == 'true'
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.x
+      - name: Install
+        if: steps.check.outputs.publish == 'true'
+        run: npm install
+      - name: Publish
+        if: steps.check.outputs.publish == 'true'
+        uses: ./.github/actions/publish
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
