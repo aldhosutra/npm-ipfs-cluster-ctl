@@ -4,11 +4,11 @@
 
 # ipfs-cluster-ctl
 
-[![](https://img.shields.io/badge/project-ipfs--cluster-ef5c43.svg?style=flat-square)](https://ipfscluster.io/documentation/reference/service/)
+[![](https://img.shields.io/badge/project-ipfs--cluster-ef5c43.svg?style=flat-square)](https://ipfscluster.io/documentation/reference/ctl/)
 
 [IPFS Cluster](https://ipfscluster.io) provides data orchestration across a swarm of IPFS daemons by allocating, replicating and tracking a global pinset distributed among multiple peers.
 
-The [ipfs-cluster-ctl](https://ipfscluster.io/documentation/reference/service/) is a command line application that runs a full cluster peer
+The [ipfs-cluster-ctl](https://ipfscluster.io/documentation/reference/ctl/) command line application is a user-friendly REST API client for IPFS Cluster. It allows to perform all the operations supported by a Cluster peer:
 
 ## Install
 
